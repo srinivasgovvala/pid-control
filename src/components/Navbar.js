@@ -15,6 +15,7 @@ const navLinks = [
       { href: '/services#ems', label: 'Environmental Monitoring' },
       { href: '/services#enms', label: 'Energy Monitoring' },
       { href: '/services#cpm', label: 'Chiller Plant Manager' },
+      { href: '/services#hmi', label: 'HMI Solutions' },
     ],
   },
   {
@@ -66,15 +67,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link href="/" className="flex items-center gap-2 z-10">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-              <rect x="2" y="18" width="6" height="16" rx="1" fill="#4CAF50"/>
-              <rect x="11" y="10" width="6" height="24" rx="1" fill="#66BB6A"/>
-              <rect x="20" y="4" width="6" height="30" rx="1" fill="#8BC34A"/>
-              <rect x="29" y="14" width="6" height="20" rx="1" fill="#4CAF50"/>
-            </svg>
-            <span className={`font-heading font-bold text-xl tracking-tight ${scrolled || !isHome ? 'text-[#0B3D24]' : 'text-white'}`}>
-              PID <span className="text-[#4CAF50]">CONTROLS</span>
-            </span>
+            <img src="/images/logo.png" alt="PID Controls" className="h-20 w-auto object-contain" />
           </Link>
 
           {/* Desktop nav */}
@@ -117,13 +110,16 @@ export default function Navbar() {
                   </>
                 ) : (
                   <Link href={link.href}
-                    className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                    className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors relative ${
                       pathname === link.href
                         ? scrolled || !isHome ? 'text-[#4CAF50] bg-green-50' : 'text-white bg-white/20'
                         : scrolled || !isHome ? 'text-gray-700 hover:text-[#4CAF50] hover:bg-green-50' : 'text-white/90 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     {link.label}
+                    {pathname === link.href && (
+                      <span className="absolute -bottom-0.5 left-2 right-2 h-0.5 bg-gradient-to-r from-[#4CAF50] to-[#8BC34A] rounded-full" />
+                    )}
                   </Link>
                 )}
               </div>

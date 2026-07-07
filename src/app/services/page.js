@@ -3,7 +3,7 @@
 import PageHeader from '@/components/PageHeader'
 import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
-import { Building, Thermometer, Leaf, BarChart3, Gauge, Wind, Zap, Wrench, Monitor, ClipboardCheck, CheckCircle, ArrowRight } from '@/components/Icons'
+import { Building, Thermometer, Leaf, BarChart3, Gauge, Wind, Zap, Wrench, Monitor, ClipboardCheck, CheckCircle, ArrowRight, Cpu } from '@/components/Icons'
 
 const coreServices = [
   {
@@ -36,6 +36,12 @@ const coreServices = [
     desc: 'Our advanced CPM solutions automate and optimize chiller plant operations for maximum efficiency. Intelligent sequencing, setpoint optimization, and variable speed control deliver significant energy savings.',
     features: ['Intelligent chiller sequencing', 'Optimal setpoint management', 'Variable primary flow control', 'Condenser water temperature optimization', 'Performance analytics & reporting', 'Automated fault detection'],
   },
+  {
+    id: 'hmi', icon: Cpu,
+    title: 'HMI Solutions',
+    desc: 'Custom Human-Machine Interface (HMI) solutions for intuitive operator control and real-time visualization. We design and deploy touchscreen panels, SCADA dashboards, and remote monitoring interfaces tailored to your facility.',
+    features: ['Custom touchscreen HMI design & development', 'SCADA system integration & visualization', 'Real-time dashboards & data trending', 'Alarm management & event logging', 'Remote monitoring via web & mobile', 'Multi-protocol communication (BACnet, Modbus, etc.)'],
+  },
 ]
 
 const advancedServices = [
@@ -57,7 +63,7 @@ export default function ServicesPage() {
           <ScrollReveal>
             <div className="text-center mb-12">
               <h2 className="section-title mb-4">Core Service Offerings</h2>
-              <p className="section-subtitle mx-auto">Five pillars of our building automation expertise</p>
+              <p className="section-subtitle mx-auto">Comprehensive building automation expertise across every layer of control</p>
             </div>
           </ScrollReveal>
           <div className="space-y-16">

@@ -8,13 +8,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2" y="18" width="6" height="16" rx="1" fill="#4CAF50"/>
-                  <rect x="11" y="10" width="6" height="24" rx="1" fill="#66BB6A"/>
-                  <rect x="20" y="4" width="6" height="30" rx="1" fill="#8BC34A"/>
-                  <rect x="29" y="14" width="6" height="20" rx="1" fill="#4CAF50"/>
-                </svg>
-                <span className="font-heading font-bold text-xl">PID <span className="text-[#4CAF50]">CONTROLS</span></span>
+                <img src="/images/logo.png" alt="PID Controls" className="h-20 w-auto object-contain" />
               </div>
               <p className="text-gray-300 text-sm leading-relaxed mb-4">
                 Smart Automation. Sustainable Performance. Intelligent Building Automation & Energy Management Solutions.
@@ -61,6 +55,7 @@ export default function Footer() {
                   'Chiller Plant Manager',
                   'IAQ Monitoring',
                   'Control Panels',
+                  'HMI Solutions',
                 ].map((s) => (
                   <li key={s}>
                     <Link href="/services" className="text-gray-300 hover:text-[#8BC34A] text-sm transition-colors">

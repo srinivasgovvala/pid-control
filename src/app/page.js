@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
-import { Building, Zap, Settings, Leaf, Thermometer, BarChart3, Wrench, ClipboardCheck, Gauge, TrendingUp, ShieldCheck, Building2, Hospital, FlaskConical, Factory, BookOpen, Server, ArrowRight, Users, Globe } from '@/components/Icons'
+import { Building, Zap, Settings, Leaf, Thermometer, BarChart3, Wrench, ClipboardCheck, Gauge, ShieldCheck, ArrowRight, Users, Globe } from '@/components/Icons'
 
 const pillars = [
   { icon: Building, label: 'Smart Buildings' },
@@ -20,13 +20,13 @@ const services = [
   { icon: Wrench, label: 'AMC & CMC Services', desc: 'Annual & comprehensive maintenance' },
 ]
 
-const industries = [
-  { icon: Building2, label: 'Commercial Buildings' },
-  { icon: Hospital, label: 'Healthcare Facilities' },
-  { icon: FlaskConical, label: 'Pharmaceutical' },
-  { icon: Factory, label: 'Industrial Facilities' },
-  { icon: BookOpen, label: 'Educational Institutions' },
-  { icon: Server, label: 'Data Centers' },
+const industryImages = [
+  { src: '/images/commercial.png', label: 'Commercial Buildings' },
+  { src: '/images/healthcare.png', label: 'Healthcare Facilities' },
+  { src: '/images/pharmaceutical.png', label: 'Pharmaceutical' },
+  { src: '/images/industrial.png', label: 'Industrial Facilities' },
+  { src: '/images/educational.png', label: 'Educational Institutions' },
+  { src: '/images/datacenters.png', label: 'Data Centers' },
 ]
 
 const previewServices = [
@@ -41,13 +41,10 @@ const previewServices = [
 const trustPoints = [
   { icon: ShieldCheck, title: '10+ Years Experience', desc: 'Proven track record in building automation since 2014' },
   { icon: Users, title: 'Expert Team', desc: 'Certified engineers and technicians' },
-  { icon: TrendingUp, title: 'Brand Partnerships', desc: 'Authorized partners with Siemens, Schneider, ABB & more' },
   { icon: Globe, title: 'Pan-India Service', desc: 'Projects delivered across India' },
   { icon: ClipboardCheck, title: 'End-to-End Support', desc: 'From design to maintenance' },
   { icon: Zap, title: 'Energy Savings', desc: 'Proven reduction in operational costs' },
 ]
-
-const partners = ['Siemens', 'Schneider', 'ABB', 'Honeywell', 'Trend', 'Belimo', 'Dwyer', 'Omicron']
 
 export default function Home() {
   return (
@@ -57,6 +54,8 @@ export default function Home() {
         <div className="absolute inset-0 opacity-[0.07]" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234CAF50' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }} />
+        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#4CAF50]/10 blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-[#8BC34A]/10 blur-3xl" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -196,12 +195,11 @@ export default function Home() {
               <p className="section-subtitle mx-auto">Delivering intelligent automation solutions across diverse sectors</p>
             </div>
           </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {industries.map((I, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {industryImages.map((I, i) => (
               <ScrollReveal key={I.label}>
-                <Link href="/industries" className="group text-center p-6 rounded-2xl bg-gray-50 hover:gradient-green hover:text-white transition-all duration-300 block">
-                  <I.icon className="w-10 h-10 mx-auto mb-3 text-[#4CAF50] group-hover:text-white group-hover:scale-110 transition-all" />
-                  <p className="font-heading font-bold text-sm md:text-base text-[#0B3D24] group-hover:text-white">{I.label}</p>
+                <Link href="/industries" className="img-card group block">
+                  <img src={I.src} alt={I.label} className="w-full object-cover object-center group-hover:scale-110 transition-transform duration-500" loading="lazy" />
                 </Link>
               </ScrollReveal>
             ))}
@@ -245,15 +243,11 @@ export default function Home() {
               <p className="section-subtitle mx-auto">Proud partners with global leaders in automation and control</p>
             </div>
           </ScrollReveal>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-            {partners.map((p, i) => (
-              <ScrollReveal key={p}>
-                <div className="gradient-dark px-6 py-3 rounded-xl">
-                  <span className="text-white font-heading font-bold text-lg">{p}</span>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          <ScrollReveal>
+            <div className="max-w-4xl mx-auto img-card">
+              <img src="/images/companies.png" alt="Our Technology Partners" className="w-full h-auto object-contain" loading="lazy" />
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

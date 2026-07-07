@@ -14,19 +14,6 @@ const pillars = [
   { icon: Leaf, title: 'Customer-Centric Approach', desc: 'Every project is unique, and we treat it as such. We take time to understand your specific needs, challenges, and goals — delivering customized solutions that truly work for you.' },
 ]
 
-const brands = [
-  { name: 'Omicron', tier: 'gold' },
-  { name: 'Siemens', tier: 'gold' },
-  { name: 'Schneider Electric', tier: 'gold' },
-  { name: 'ABB', tier: 'gold' },
-  { name: 'Trend', tier: 'gold' },
-  { name: 'Belimo', tier: 'silver' },
-  { name: 'Dwyer', tier: 'silver' },
-  { name: 'Honeywell', tier: 'gold' },
-  { name: 'Vykon by Tridium', tier: 'gold' },
-  { name: 'iSMA Controlli', tier: 'silver' },
-]
-
 export default function WhyChooseUsPage() {
   return (
     <>
@@ -60,19 +47,11 @@ export default function WhyChooseUsPage() {
               <p className="section-subtitle mx-auto">Proudly partnered with the world&apos;s leading automation and control brands</p>
             </div>
           </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-            {brands.map((b) => (
-              <ScrollReveal key={b.name}>
-                <div className={`rounded-xl p-6 text-center transition-all duration-300 hover:scale-105 ${
-                  b.tier === 'gold'
-                    ? 'gradient-dark shadow-lg hover:shadow-xl'
-                    : 'bg-white shadow-md hover:shadow-lg border border-gray-100'
-                }`}>
-                  <p className={`font-heading font-bold text-sm md:text-base ${b.tier === 'gold' ? 'text-white' : 'text-[#0B3D24]'}`}>{b.name}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          <ScrollReveal>
+            <div className="max-w-4xl mx-auto img-card">
+              <img src="/images/companies.png" alt="Our Brands" className="w-full h-auto object-contain" loading="lazy" />
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

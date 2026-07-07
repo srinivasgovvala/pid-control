@@ -3,15 +3,15 @@
 import PageHeader from '@/components/PageHeader'
 import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
-import { Building2, Hospital, FlaskConical, Factory, BookOpen, Server, ArrowRight } from '@/components/Icons'
+import { ArrowRight } from '@/components/Icons'
 
 const industries = [
-  { id: 'commercial', icon: Building2, title: 'Commercial Buildings', desc: 'Smart BMS and HVAC automation for office complexes, malls, hotels, and mixed-use developments. Reduce operational costs while enhancing occupant comfort and building performance.' },
-  { id: 'healthcare', icon: Hospital, title: 'Healthcare Facilities', desc: 'Critical environment monitoring and control for hospitals, clinics, and medical facilities. Precise temperature, humidity, and IAQ management for patient safety and regulatory compliance.' },
-  { id: 'pharma', icon: FlaskConical, title: 'Pharmaceutical & Life Sciences', desc: 'GMP-compliant automation solutions for pharmaceutical manufacturing, clean rooms, and laboratory environments. 24/7 environmental monitoring with full validation support.' },
-  { id: 'industrial', icon: Factory, title: 'Industrial Facilities', desc: 'Robust automation and control systems for factories, warehouses, and production plants. Energy optimization, process monitoring, and integrated plant management.' },
-  { id: 'education', icon: BookOpen, title: 'Educational Institutions', desc: 'Comprehensive building management for campuses, universities, and research centers. Centralized control of HVAC, lighting, and energy systems across multiple buildings.' },
-  { id: 'datacenter', icon: Server, title: 'Data Centers & Critical Infrastructure', desc: 'Precision cooling control, environmental monitoring, and power management for data centers. Ensure uptime, efficiency, and compliance with industry standards.' },
+  { id: 'commercial', src: '/images/commercial.png', title: 'Commercial Buildings', desc: 'Smart BMS and HVAC automation for office complexes, malls, hotels, and mixed-use developments. Reduce operational costs while enhancing occupant comfort and building performance.' },
+  { id: 'healthcare', src: '/images/healthcare.png', title: 'Healthcare Facilities', desc: 'Critical environment monitoring and control for hospitals, clinics, and medical facilities. Precise temperature, humidity, and IAQ management for patient safety and regulatory compliance.' },
+  { id: 'pharma', src: '/images/pharmaceutical.png', title: 'Pharmaceutical & Life Sciences', desc: 'GMP-compliant automation solutions for pharmaceutical manufacturing, clean rooms, and laboratory environments. 24/7 environmental monitoring with full validation support.' },
+  { id: 'industrial', src: '/images/industrial.png', title: 'Industrial Facilities', desc: 'Robust automation and control systems for factories, warehouses, and production plants. Energy optimization, process monitoring, and integrated plant management.' },
+  { id: 'education', src: '/images/educational.png', title: 'Educational Institutions', desc: 'Comprehensive building management for campuses, universities, and research centers. Centralized control of HVAC, lighting, and energy systems across multiple buildings.' },
+  { id: 'datacenter', src: '/images/datacenters.png', title: 'Data Centers & Critical Infrastructure', desc: 'Precision cooling control, environmental monitoring, and power management for data centers. Ensure uptime, efficiency, and compliance with industry standards.' },
 ]
 
 export default function IndustriesPage() {
@@ -24,12 +24,8 @@ export default function IndustriesPage() {
             {industries.map((I) => (
               <section key={I.id} id={I.id}>
                 <ScrollReveal>
-                  <div className="card group h-full hover:border-[#4CAF50]/30">
-                    <div className="w-16 h-16 rounded-2xl gradient-green flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                      <I.icon className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="font-heading font-bold text-xl text-[#0B3D24] mb-3">{I.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{I.desc}</p>
+                  <div className="img-card group">
+                    <img src={I.src} alt={I.title} className="w-full object-cover object-center group-hover:scale-110 transition-transform duration-500" loading="lazy" />
                   </div>
                 </ScrollReveal>
               </section>
