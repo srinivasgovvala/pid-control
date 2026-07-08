@@ -107,6 +107,64 @@
   animation: gradient-shift 4s ease infinite;
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.partner-marquee-container {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.partner-marquee-track {
+  display: flex;
+  gap: 3rem;
+  width: fit-content;
+  animation: marquee 40s linear infinite;
+}
+
+.partner-marquee-container:hover .partner-marquee-track {
+  animation-play-state: paused;
+}
+
+.partner-logo-cell {
+  flex-shrink: 0;
+  width: 150px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.partner-logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .partner-logo-cell {
+    width: 110px;
+    height: 70px;
+  }
+  .partner-marquee-track {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .partner-logo-cell {
+    width: 90px;
+    height: 60px;
+  }
+  .partner-marquee-track {
+    gap: 1.5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

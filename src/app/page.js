@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
+import PartnerMarquee from '@/components/PartnerMarquee'
 import { Building, Zap, Settings, Leaf, Thermometer, BarChart3, Wrench, ClipboardCheck, Gauge, ShieldCheck, ArrowRight, Users, Globe } from '@/components/Icons'
 
 const pillars = [
@@ -244,9 +245,7 @@ export default function Home() {
             </div>
           </ScrollReveal>
           <ScrollReveal>
-            <div className="max-w-4xl mx-auto img-card">
-              <img src="/images/companies.png" alt="Our Technology Partners" className="w-full h-auto object-contain" loading="lazy" />
-            </div>
+            <PartnerMarquee />
           </ScrollReveal>
         </div>
       </section>
