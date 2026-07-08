@@ -20,7 +20,8 @@ export default function WhyChooseUsPage() {
       <PageHeader title="Why Choose Us" subtitle="Six reasons why PID Controls is the right partner for your building automation needs" />
 
       {/* Trust Pillars */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-white relative">
+        <div className="absolute inset-0 circuit-overlay pointer-events-none" />
         <div className="container-wide">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pillars.map((P) => (
@@ -39,7 +40,8 @@ export default function WhyChooseUsPage() {
       </section>
 
       {/* Our Brands */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-gray-50 relative">
+        <div className="absolute inset-0 bg-grid-pattern pointer-events-none" />
         <div className="container-wide">
           <ScrollReveal>
             <div className="text-center mb-12">
@@ -77,7 +79,8 @@ export default function WhyChooseUsPage() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-white text-center">
+      <section className="section-padding bg-white text-center relative">
+        <div className="absolute inset-0 circuit-overlay pointer-events-none" />
         <div className="container-wide">
           <ScrollReveal>
             <h2 className="section-title mb-4">Ready to Experience the Difference?</h2>

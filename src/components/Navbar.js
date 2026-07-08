@@ -9,12 +9,12 @@ const navLinks = [
   {
     label: 'Services',
     dropdown: [
-      { href: '/services#bms', label: 'BMS' },
-      { href: '/services#hvac', label: 'HVAC Integration' },
-      { href: '/services#ems', label: 'Environmental Monitoring' },
-      { href: '/services#enms', label: 'Energy Monitoring' },
-      { href: '/services#cpm', label: 'Chiller Plant Manager' },
-      { href: '/services#hmi', label: 'HMI Solutions' },
+      { href: '/services#building-management-system', label: 'BMS' },
+      { href: '/services#hvac-integration', label: 'HVAC Integration' },
+      { href: '/services#environmental-monitoring-system', label: 'Environmental Monitoring' },
+      { href: '/services#energy-monitoring-system', label: 'Energy Monitoring' },
+      { href: '/services#chiller-plant-manager', label: 'Chiller Plant Manager' },
+      { href: '/services#hmi-solutions', label: 'HMI Solutions' },
     ],
   },
   {
@@ -63,9 +63,9 @@ export default function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || !isHome ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 md:h-24">
+        <div className="flex items-center justify-between h-24 md:h-32">
           <Link href="/" className="flex items-center gap-2 z-10">
-            <img src="/images/logo.png" alt="PID Controls" className="h-24 w-auto object-contain" />
+            <img src="/images/logo.png" alt="PID Controls" className="h-20 md:h-32 w-auto object-contain" />
           </Link>
 
           {/* Desktop nav */}
@@ -161,6 +161,7 @@ export default function Navbar() {
                       <div className="ml-4 space-y-1 pb-2">
                         {link.dropdown.map((item) => (
                           <Link key={item.href} href={item.href}
+                            onClick={() => { setMobileOpen(false); setOpenDropdown(null) }}
                             className={`block px-3 py-2 text-sm rounded-lg ${
                               pathname === item.href
                                 ? 'text-[#4CAF50] bg-green-50 font-medium'

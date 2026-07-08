@@ -19,7 +19,8 @@ export default function ProcessPage() {
     <>
       <PageHeader title="Our Process" subtitle="A proven six-step methodology for successful project delivery" />
 
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-white relative">
+        <div className="absolute inset-0 circuit-overlay pointer-events-none" />
         <div className="container-wide">
           <ScrollReveal>
             <div className="text-center mb-16">
