@@ -9,28 +9,32 @@ const navLinks = [
   {
     label: 'Services',
     dropdown: [
-      { href: '/services#building-management-system', label: 'BMS' },
+      { href: '/services#building-management-system', label: 'Building Management System (BMS)' },
       { href: '/services#hvac-integration', label: 'HVAC Integration' },
-      { href: '/services#environmental-monitoring-system', label: 'Environmental Monitoring' },
-      { href: '/services#energy-monitoring-system', label: 'Energy Monitoring' },
-      { href: '/services#chiller-plant-manager', label: 'Chiller Plant Manager' },
+      { href: '/services#environmental-monitoring-system', label: 'Environmental Monitoring System (EMS)' },
+      { href: '/services#energy-monitoring-system', label: 'Energy Monitoring System (EnMS)' },
+      { href: '/services#chiller-plant-manager', label: 'Chiller Plant Manager (CPM)' },
+      { href: '/services#iaq-monitoring', label: 'IAQ Monitoring' },
+      { href: '/services#control-panels', label: 'Control Panels' },
       { href: '/services#hmi-solutions', label: 'HMI Solutions' },
     ],
   },
   {
-    label: 'Industries',
+    label: 'Products',
     dropdown: [
-      { href: '/industries#commercial', label: 'Commercial Buildings' },
-      { href: '/industries#healthcare', label: 'Healthcare' },
-      { href: '/industries#pharma', label: 'Pharmaceutical' },
-      { href: '/industries#industrial', label: 'Industrial' },
-      { href: '/industries#education', label: 'Educational' },
-      { href: '/industries#datacenter', label: 'Data Centers' },
+      { href: '/products', label: 'Human Machine Interface (HMI)' },
     ],
   },
-  { href: '/process', label: 'Our Process' },
-  { href: '/why-choose-us', label: 'Why Us' },
-  { href: '/about', label: 'About' },
+  { href: '/clients', label: 'Our Clients' },
+  {
+    label: 'About',
+    dropdown: [
+      { href: '/about#vision', label: 'Vision' },
+      { href: '/about#mission', label: 'Mission' },
+      { href: '/about#why-us', label: 'Why Us' },
+      { href: '/about#our-process', label: 'Our Process' },
+    ],
+  },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -63,9 +67,9 @@ export default function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || !isHome ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24 md:h-32">
+        <div className="flex items-center justify-between h-24 sm:h-28 md:h-32">
           <Link href="/" className="flex items-center gap-2 z-10">
-            <img src="/images/logo.png" alt="PID Controls" className="h-20 md:h-32 w-auto object-contain" />
+            <img src="/images/logo.png" alt="PID Controls" className="logo-img" />
           </Link>
 
           {/* Desktop nav */}

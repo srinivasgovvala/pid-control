@@ -13,6 +13,8 @@ const serviceImages = {
   'energy-monitoring-system': '/images/Enms.png',
   'chiller-plant-manager': '/images/chillerplant.png',
   'hmi-solutions': '/images/hmi.png',
+  'iaq-monitoring': '/images/IAQ.png',
+  'control-panels': '/images/controlpanels.png',
 }
 
 const altTexts = {
@@ -22,6 +24,8 @@ const altTexts = {
   'energy-monitoring-system': 'Energy monitoring and analytics dashboard',
   'chiller-plant-manager': 'Chiller plant management and optimization dashboard',
   'hmi-solutions': 'HMI solutions and building control interface',
+  'iaq-monitoring': 'Indoor Air Quality monitoring and sensor technology',
+  'control-panels': 'Custom automation and electrical control panels',
 }
 
 const coreServices = [
@@ -61,11 +65,21 @@ const coreServices = [
     desc: 'Custom Human-Machine Interface (HMI) solutions for intuitive operator control and real-time visualization. We design and deploy touchscreen panels, SCADA dashboards, and remote monitoring interfaces tailored to your facility.',
     features: ['Custom touchscreen HMI design & development', 'SCADA system integration & visualization', 'Real-time dashboards & data trending', 'Alarm management & event logging', 'Remote monitoring via web & mobile', 'Multi-protocol communication (BACnet, Modbus, etc.)'],
   },
+  {
+    id: 'iaq-monitoring', icon: Wind,
+    title: 'IAQ Monitoring',
+    desc: 'Indoor Air Quality monitoring solutions for healthier, safer indoor environments. Real-time tracking of CO2, PM2.5/PM10, TVOC, temperature, and humidity with automated alerts and compliance reporting.',
+    features: ['Real-time IAQ parameter tracking', 'CO2, PM2.5/PM10 & TVOC monitoring', 'Temperature & humidity sensing', 'Automated threshold alerts & notifications', 'Compliance reporting & documentation', 'Multi-zone IAQ monitoring'],
+  },
+  {
+    id: 'control-panels', icon: Zap,
+    title: 'Control Panels',
+    desc: 'Custom designed and built automation panels, electrical panels, and VFD panels. Fully tested and commissioned to meet your specific project requirements and industry standards.',
+    features: ['Custom automation panel design & fabrication', 'Electrical panel manufacturing & wiring', 'VFD panel integration & commissioning', 'PLC & controller panel integration', 'Quality testing & compliance', 'On-site installation & support'],
+  },
 ]
 
 const advancedServices = [
-  { icon: Wind, title: 'IAQ Monitoring', desc: 'Indoor Air Quality monitoring solutions for healthier, safer indoor environments. Real-time tracking of CO2, PM2.5/PM10, TVOC, temperature, and humidity.' },
-  { icon: Zap, title: 'Control Panels', desc: 'Custom designed and built automation panels, electrical panels, and VFD panels. Fully tested and commissioned to meet your specific project requirements.' },
   { icon: Wrench, title: 'HVAC Products', desc: 'Supply and installation of quality HVAC components including filters, valves, actuators, VRV units, blowers, and associated accessories.' },
   { icon: Monitor, title: 'Engineering Services', desc: 'Comprehensive engineering services including system design, consultancy, project execution, technical support, and site supervision.' },
   { icon: ClipboardCheck, title: 'AMC & CMC Services', desc: 'Annual Maintenance Contracts (AMC) and Comprehensive Maintenance Contracts (CMC) to ensure your systems operate at peak performance year-round.' },
@@ -91,13 +105,6 @@ export default function ServicesPage() {
       <section className="section-padding bg-white relative">
         <div className="absolute inset-0 bg-grid-pattern pointer-events-none" />
         <div className="container-wide relative z-10">
-          <ScrollReveal>
-            <div className="text-center mb-16">
-              <h2 className="section-title mb-4">Core Service Offerings</h2>
-              <p className="section-subtitle mx-auto">Comprehensive building automation expertise across every layer of control</p>
-            </div>
-          </ScrollReveal>
-
           {coreServices.map((S, i) => {
             const isImageLeft = i % 2 === 0
             const sectionId = S.id
@@ -111,16 +118,25 @@ export default function ServicesPage() {
                 <div className={`grid md:grid-cols-2 gap-8 md:gap-12 items-center ${!isImageLeft ? 'md:grid-flow-dense' : ''}`}>
                   {/* Image */}
                   <div className={`${!isImageLeft ? 'md:col-start-2' : ''}`}>
-                    <div className="service-image-wrapper group">
-                      <img
-                        src={serviceImages[sectionId]}
-                        alt={altTexts[sectionId]}
-                        className="service-image"
-                        loading={i === 0 ? 'eager' : 'lazy'}
-                        width={800}
-                        height={500}
-                      />
-                    </div>
+                    {serviceImages[sectionId] ? (
+                      <div className="service-image-wrapper group">
+                        <img
+                          src={serviceImages[sectionId]}
+                          alt={altTexts[sectionId]}
+                          className="service-image"
+                          loading={i === 0 ? 'eager' : 'lazy'}
+                          width={800}
+                          height={500}
+                        />
+                      </div>
+                    ) : (
+                      <div className="service-image-wrapper flex items-center justify-center gradient-dark min-h-[280px] md:min-h-[320px]">
+                        <div className="text-center p-8">
+                          <S.icon className="w-20 h-20 md:w-24 md:h-24 text-[#8BC34A] mx-auto mb-4" />
+                          <p className="text-green-200 font-heading font-semibold text-lg">{S.title}</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   {/* Text */}
                   <div>

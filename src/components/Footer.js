@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <img src="/images/logo.png" alt="PID Controls" className="h-20 w-auto object-contain" />
+                <img src="/images/logo.png" alt="PID Controls" className="logo-img" />
               </div>
               <p className="text-gray-300 text-sm leading-relaxed mb-4">
                 Smart Automation. Sustainable Performance. Intelligent Building Automation & Energy Management Solutions.
@@ -30,9 +30,10 @@ export default function Footer() {
                   { href: '/', label: 'Home' },
                   { href: '/about', label: 'About Us' },
                   { href: '/services', label: 'Services' },
+                  { href: '/clients', label: 'Our Clients' },
                   { href: '/industries', label: 'Industries' },
-                  { href: '/process', label: 'Our Process' },
-                  { href: '/why-choose-us', label: 'Why Choose Us' },
+                  { href: '/about#why-us', label: 'Why Choose Us' },
+                  { href: '/about#our-process', label: 'Our Process' },
                   { href: '/contact', label: 'Contact' },
                 ].map((link) => (
                   <li key={link.href}>

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useState, useEffect, useRef } from 'react'
 import ScrollReveal from '@/components/ScrollReveal'
 import PartnerMarquee from '@/components/PartnerMarquee'
 import { Building, Zap, Settings, Leaf, Thermometer, BarChart3, Wrench, ClipboardCheck, Gauge, ShieldCheck, ArrowRight, Users, Globe } from '@/components/Icons'
@@ -13,12 +14,11 @@ const pillars = [
 ]
 
 const services = [
-  { icon: Building, label: 'BMS Solutions', desc: 'Centralized building monitoring & control' },
-  { icon: Thermometer, label: 'HVAC Automation', desc: 'Smart HVAC performance optimization' },
-  { icon: BarChart3, label: 'Energy Management', desc: 'Real-time energy tracking & analytics' },
-  { icon: Leaf, label: 'Environment Monitoring', desc: 'Continuous environmental compliance' },
-  { icon: Settings, label: 'Control & Engineering', desc: 'Custom automation & electrical panels' },
-  { icon: Wrench, label: 'AMC & CMC Services', desc: 'Annual & comprehensive maintenance' },
+  { icon: Building, label: 'BMS Solutions', desc: 'Centralized building monitoring & control', href: '/services#building-management-system', image: '/images/bms.png' },
+  { icon: Thermometer, label: 'HVAC Automation', desc: 'Smart HVAC performance optimization', href: '/services#hvac-integration', image: '/images/hvac.png' },
+  { icon: BarChart3, label: 'Energy Management', desc: 'Real-time energy tracking & analytics', href: '/services#energy-monitoring-system', image: '/images/Enms.png' },
+  { icon: Leaf, label: 'Environment Monitoring', desc: 'Continuous environmental compliance', href: '/services#environmental-monitoring-system', image: '/images/ems.png' },
+  { icon: Settings, label: 'Control & Engineering', desc: 'Custom automation & electrical panels', href: '/services#control-panels', image: '/images/controlpanels.png' },
 ]
 
 const industryImages = [
@@ -48,6 +48,29 @@ const trustPoints = [
 ]
 
 export default function Home() {
+  const [activeService, setActiveService] = useState(0)
+  const carouselRef = useRef(null)
+  const cardRefs = useRef([])
+  const intervalRef = useRef(null)
+
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) return
+    intervalRef.current = setInterval(() => {
+      setActiveService(prev => (prev + 1) % services.length)
+    }, 4000)
+    return () => clearInterval(intervalRef.current)
+  }, [])
+
+  useEffect(() => {
+    const container = carouselRef.current
+    if (!container) return
+    const card = cardRefs.current[activeService]
+    if (!card) return
+    const scrollLeft = card.offsetLeft - container.offsetLeft - (container.offsetWidth - card.offsetWidth) / 2
+    container.scrollTo({ left: scrollLeft, behavior: 'smooth' })
+  }, [activeService])
+
   return (
     <>
       {/* Hero */}
@@ -61,7 +84,6 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <ScrollReveal>
-                <p className="text-[#8BC34A] font-semibold text-sm uppercase tracking-widest mb-4">PID Controls</p>
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white leading-tight mb-4">
                   Smart Automation.<br />
                   <span className="gradient-green bg-clip-text text-transparent">Sustainable Performance.</span>
@@ -106,15 +128,44 @@ export default function Home() {
               <p className="section-subtitle mx-auto">Comprehensive building automation and energy management solutions tailored to your needs</p>
             </div>
           </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+          <div ref={carouselRef} className="flex overflow-x-hidden gap-4 md:gap-6 pb-4 scroll-smooth" style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
+            onMouseEnter={() => clearInterval(intervalRef.current)}
+            onMouseLeave={() => { intervalRef.current = setInterval(() => setActiveService(prev => (prev + 1) % services.length), 4000) }}
+          >
             {services.map((S, i) => (
-              <ScrollReveal key={S.label}>
-                <Link href="/services" className="card group text-center hover:border-[#4CAF50] hover:shadow-green-100 h-full block">
-                  <S.icon className="w-10 h-10 mx-auto mb-3 text-[#4CAF50] group-hover:scale-110 transition-transform" />
-                  <h3 className="font-heading font-bold text-sm md:text-base text-[#0B3D24] mb-1">{S.label}</h3>
-                  <p className="text-xs text-gray-500">{S.desc}</p>
+              <div key={S.label} ref={el => cardRefs.current[i] = el} className={`shrink-0 w-[75%] md:w-[40%] lg:w-[28%] animate-fade-in-up`} style={{ animationDelay: `${i * 0.15}s` }}>
+                <Link href={S.href}
+                  className={`block transition-all duration-500 ease-out ${i === activeService ? 'scale-100 opacity-100' : 'scale-90 opacity-50 hover:opacity-75'}`}
+                  onClick={() => setActiveService(i)}
+                >
+                  <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow h-full bg-white border border-gray-100 group">
+                    {S.image ? (
+                      <div className="aspect-[4/3] overflow-hidden">
+                        <img src={S.image} alt={S.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading={i < 2 ? 'eager' : 'lazy'} />
+                      </div>
+                    ) : (
+                      <div className="aspect-[4/3] gradient-dark flex items-center justify-center">
+                        <S.icon className="w-16 h-16 text-[#8BC34A]" />
+                      </div>
+                    )}
+                    <div className="p-4 md:p-5">
+                      <div className="flex items-center gap-2 mb-1">
+                        <S.icon className="w-5 h-5 text-[#4CAF50]" />
+                        <h3 className="font-heading font-bold text-sm md:text-base text-[#0B3D24]">{S.label}</h3>
+                      </div>
+                      <p className="text-xs text-gray-500">{S.desc}</p>
+                    </div>
+                  </div>
                 </Link>
-              </ScrollReveal>
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-center gap-2 mt-6">
+            {services.map((_, i) => (
+              <button key={i} onClick={() => setActiveService(i)}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === activeService ? 'bg-[#4CAF50] w-6' : 'bg-gray-300 hover:bg-gray-400'}`}
+                aria-label={`Go to service ${i + 1}`}
+              />
             ))}
           </div>
         </div>
@@ -126,19 +177,8 @@ export default function Home() {
         <div className="container-wide">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <ScrollReveal>
-              <div className="relative">
-                <div className="w-full aspect-[4/3] gradient-dark rounded-2xl flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <svg className="w-20 h-20 mx-auto mb-4 text-[#4CAF50]" viewBox="0 0 36 36" fill="none">
-                      <rect x="2" y="18" width="6" height="16" rx="1" fill="currentColor"/>
-                      <rect x="11" y="10" width="6" height="24" rx="1" fill="#66BB6A"/>
-                      <rect x="20" y="4" width="6" height="30" rx="1" fill="#8BC34A"/>
-                      <rect x="29" y="14" width="6" height="20" rx="1" fill="currentColor"/>
-                    </svg>
-                    <p className="text-green-200 font-heading font-bold text-xl">10+ Years of Excellence</p>
-                    <p className="text-green-300/70 text-sm mt-2">Engineering Smarter Buildings</p>
-                  </div>
-                </div>
+              <div className="w-full aspect-[4/3] gradient-dark rounded-2xl flex items-center justify-center p-6">
+                <img src="/images/10-years-excellence.png" alt="10+ Years of Excellence in Building Automation" className="w-full h-full object-contain" loading="eager" />
               </div>
             </ScrollReveal>
             <ScrollReveal>
