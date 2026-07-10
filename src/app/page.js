@@ -122,9 +122,6 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="hero-rise text-[#8BC34A] font-semibold text-sm uppercase tracking-widest mb-4" style={{ animationDelay: '0s' }}>
-                Trusted Since 2014 &middot; Pan-India
-              </p>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white leading-tight mb-4">
                 <span className="hero-rise-line"><span className="gradient-green bg-clip-text text-transparent block" style={{ animationDelay: '0.12s' }}>Smart Automation.</span></span>
                 <span className="hero-rise-line"><span className="gradient-green bg-clip-text text-transparent block" style={{ animationDelay: '0.24s' }}>Sustainable Performance.</span></span>
