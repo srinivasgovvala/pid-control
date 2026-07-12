@@ -37,7 +37,7 @@ export default function ClientsPage() {
                 return (
                   <ScrollReveal key={client.name}>
                     <div className={`card group text-center h-full flex flex-col items-center justify-center ${isLastAndOdd ? 'lg:col-start-2' : ''}`}>
-                      <div className="w-full h-40 sm:h-44 md:h-48 flex items-center justify-center p-6 md:p-8">
+                      <div className="w-full h-40 sm:h-44 md:h-48 flex items-center justify-center p-6 md:p-10">
                         <img
                           src={client.src}
                           alt={`${client.name} - Valued Client of PID Controls`}
@@ -47,9 +47,6 @@ export default function ClientsPage() {
                           height={120}
                         />
                       </div>
-                      <h3 className="font-heading font-bold text-base md:text-lg text-[#0B3D24] mt-2">
-                        {client.name}
-                      </h3>
                     </div>
                   </ScrollReveal>
                 )

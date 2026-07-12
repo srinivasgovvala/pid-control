@@ -38,76 +38,82 @@ export async function POST(request) {
       return Response.json({ error: 'Invalid email address.' }, { status: 400 })
     }
 
-    if (name.trim().length > 200 || message.trim().length > 5000) {
+    if (name.trim().length > 200 || company?.trim().length > 200 || email.trim().length > 254 || phone?.trim().length > 50 || service?.trim().length > 200 || message.trim().length > 5000) {
       return Response.json({ error: 'Input too long.' }, { status: 400 })
     }
 
-    const EMAIL_TO = process.env.EMAIL_TO || 'sales@pid-controls.com'
-    const EMAIL_FROM = process.env.EMAIL_FROM
-
-    const smtpHost = process.env.SMTP_HOST
-    const smtpPort = process.env.SMTP_PORT
-    const smtpUser = process.env.SMTP_USER
-    const smtpPass = process.env.SMTP_PASS
-
-    const useSmtp = smtpHost && smtpPort && smtpUser && smtpPass
-
-    const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'long', timeStyle: 'short' })
-
-    const htmlBody = `
-      <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: auto; background: #f9f9f9; border-radius: 12px; overflow: hidden;">
-        <div style="background: linear-gradient(135deg, #0B3D24, #123524); padding: 24px 32px;">
-          <h2 style="color: #fff; margin: 0; font-size: 22px;">New Website Enquiry</h2>
-        </div>
-        <div style="padding: 32px; background: #fff;">
-          <table style="width: 100%; border-collapse: collapse;">
-            <tr><td style="padding: 10px 8px; border-bottom: 1px solid #eee; font-weight: 600; color: #0B3D24; width: 120px;">Name</td><td style="padding: 10px 8px; border-bottom: 1px solid #eee; color: #333;">${escapeHtml(name)}</td></tr>
-            <tr><td style="padding: 10px 8px; border-bottom: 1px solid #eee; font-weight: 600; color: #0B3D24;">Company</td><td style="padding: 10px 8px; border-bottom: 1px solid #eee; color: #333;">${escapeHtml(company || 'N/A')}</td></tr>
-            <tr><td style="padding: 10px 8px; border-bottom: 1px solid #eee; font-weight: 600; color: #0B3D24;">Email</td><td style="padding: 10px 8px; border-bottom: 1px solid #eee; color: #333;"><a href="mailto:${escapeHtml(email)}" style="color: #4CAF50;">${escapeHtml(email)}</a></td></tr>
-            <tr><td style="padding: 10px 8px; border-bottom: 1px solid #eee; font-weight: 600; color: #0B3D24;">Phone</td><td style="padding: 10px 8px; border-bottom: 1px solid #eee; color: #333;">${escapeHtml(phone || 'N/A')}</td></tr>
-            <tr><td style="padding: 10px 8px; border-bottom: 1px solid #eee; font-weight: 600; color: #0B3D24;">Service</td><td style="padding: 10px 8px; border-bottom: 1px solid #eee; color: #333;">${escapeHtml(service || 'Not specified')}</td></tr>
-            <tr><td style="padding: 10px 8px; border-bottom: 1px solid #eee; font-weight: 600; color: #0B3D24; vertical-align: top;">Message</td><td style="padding: 10px 8px; border-bottom: 1px solid #eee; color: #333; white-space: pre-wrap;">${escapeHtml(message)}</td></tr>
-            <tr><td style="padding: 10px 8px; font-weight: 600; color: #0B3D24;">Submitted</td><td style="padding: 10px 8px; color: #888; font-size: 13px;">${timestamp}</td></tr>
-          </table>
-          <p style="color: #999; font-size: 12px; margin-top: 24px; text-align: center; border-top: 1px solid #eee; padding-top: 16px;">This enquiry was submitted via the PID Controls website contact form. Reply-To: ${escapeHtml(email)}</p>
-        </div>
-      </div>
-    `
-
-    const textBody = `New Website Enquiry\n\nName: ${name}\nCompany: ${company || 'N/A'}\nEmail: ${email}\nPhone: ${phone || 'N/A'}\nService: ${service || 'Not specified'}\nMessage:\n${message}\n\nSubmitted: ${timestamp}`
-
-    if (useSmtp) {
-      const transporter = nodemailer.createTransport({
-        host: smtpHost,
-        port: parseInt(smtpPort, 10),
-        secure: smtpPort === '465',
-        auth: { user: smtpUser, pass: smtpPass },
-      })
-
-      await transporter.sendMail({
-        from: `"PID Controls Website" <${EMAIL_FROM || smtpUser}>`,
-        to: EMAIL_TO,
-        replyTo: email,
-        subject: `New Website Enquiry - ${name}`,
-        html: htmlBody,
-        text: textBody,
-      })
-    } else {
-      console.log('--- CONTACT FORM SUBMISSION (SMTP not configured) ---')
-      console.log('To:', EMAIL_TO)
-      console.log('Reply-To:', email)
-      console.log('Subject:', `New Website Enquiry - ${name}`)
-      console.log('Body:', textBody)
-      console.log('--- END ---')
+    const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, EMAIL_FROM, EMAIL_TO } = process.env
+    if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !EMAIL_FROM || !EMAIL_TO) {
+      console.error('Contact email is not fully configured.')
+      return Response.json({ error: 'We could not send your message right now. Please try again later.' }, { status: 503 })
     }
+
+    const escapeHtml = (value) => String(value || '').replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character])
+    const details = [
+      ['Name', name.trim()],
+      ['Email', email.trim()],
+      ['Company', company?.trim() || 'N/A'],
+      ['Phone', phone?.trim() || 'N/A'],
+      ['Service', service?.trim() || 'Not specified'],
+      ['Message', message.trim()],
+    ]
+    const transporter = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: Number(SMTP_PORT),
+      secure: Number(SMTP_PORT) === 465,
+      // Zoho displays app passwords in spaced groups; SMTP expects the continuous token.
+      auth: { user: SMTP_USER.trim(), pass: SMTP_PASS.replace(/\s/g, '') },
+    })
+
+    await transporter.sendMail({
+      from: EMAIL_FROM,
+      to: EMAIL_TO,
+      replyTo: email.trim(),
+      subject: `New Website Enquiry - ${name.trim().replace(/[\r\n]/g, ' ')}`,
+      text: details.map(([label, value]) => `${label}: ${value}`).join('\n\n'),
+      html: `<h2>New Website Enquiry</h2><table>${details.map(([label, value]) => `<tr><th align="left" style="padding: 4px 12px 4px 0; vertical-align: top;">${escapeHtml(label)}</th><td style="white-space: pre-wrap;">${escapeHtml(value)}</td></tr>`).join('')}</table>`,
+    })
+
+    await transporter.sendMail({
+      from: EMAIL_FROM,
+      to: email.trim(),
+      subject: 'We have received your enquiry — PID Controls',
+      text: `Hello ${name.trim()},\n\nYour response is noted. Thank you for contacting PID Controls.\n\nWe have received your enquiry${service?.trim() ? ` about ${service.trim()}` : ''} and our team will get back to you soon.\n\nRegards,\nPID Controls\nwww.pid-controls.com`,
+      html: `<!doctype html>
+        <html lang="en">
+          <body style="margin:0;padding:0;background:#f3f7f4;font-family:Arial,Helvetica,sans-serif;color:#25352b;">
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f3f7f4;padding:32px 16px;">
+              <tr><td align="center">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:620px;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 8px 28px rgba(11,61,36,.10);">
+                  <tr><td style="background:#0B3D24;padding:30px 36px;">
+                    <div style="font-size:24px;line-height:1.2;font-weight:700;letter-spacing:.2px;color:#ffffff;">PID <span style="color:#8EDC91;">Controls</span></div>
+                    <div style="margin-top:7px;font-size:12px;line-height:1.4;letter-spacing:1.4px;text-transform:uppercase;color:#c8dfcb;">Smarter facility solutions</div>
+                  </td></tr>
+                  <tr><td style="padding:36px;">
+                    <div style="width:46px;height:46px;line-height:46px;text-align:center;border-radius:50%;background:#e7f5e8;color:#238b42;font-size:24px;font-weight:700;">✓</div>
+                    <h1 style="margin:18px 0 10px;font-size:26px;line-height:1.25;color:#0B3D24;font-weight:700;">Your response is noted.</h1>
+                    <p style="margin:0;font-size:16px;line-height:1.65;color:#526158;">Hello ${escapeHtml(name.trim())}, thank you for reaching out to PID Controls. Our team has received your enquiry and will get back to you soon.</p>
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:28px 0 0;background:#f6faf6;border:1px solid #d9eadb;border-radius:10px;">
+                      <tr><td style="padding:18px 20px;">
+                        <div style="font-size:12px;line-height:1.4;letter-spacing:1px;text-transform:uppercase;font-weight:700;color:#54825a;">Your enquiry</div>
+                        <div style="margin-top:7px;font-size:16px;line-height:1.5;font-weight:700;color:#0B3D24;">${escapeHtml(service?.trim() || 'Consultation request')}</div>
+                      </td></tr>
+                    </table>
+                    <p style="margin:28px 0 0;font-size:15px;line-height:1.65;color:#526158;">We look forward to helping you build a smarter, more efficient facility.</p>
+                  </td></tr>
+                  <tr><td style="padding:21px 36px;background:#f6faf6;border-top:1px solid #dfeae0;">
+                    <div style="font-size:13px;line-height:1.6;color:#617167;">PID Controls &nbsp;•&nbsp; Hyderabad, India<br><a href="https://www.pid-controls.com" style="color:#238b42;text-decoration:none;font-weight:700;">www.pid-controls.com</a></div>
+                  </td></tr>
+                </table>
+              </td></tr>
+            </table>
+          </body>
+        </html>`,
+    })
 
     return Response.json({ success: true })
   } catch (error) {
-    console.error('Contact form error:', error)
+    console.error('Contact form email error:', error.message)
     return Response.json({ error: 'We could not send your message right now. Please try again or contact us directly at sales@pid-controls.com.' }, { status: 500 })
   }
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 }

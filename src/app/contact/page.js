@@ -48,10 +48,13 @@ export default function ContactPage() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, _hp: hpValue }),
+        body: JSON.stringify({
+          ...form,
+          _hp: hpValue,
+        }),
       })
       const data = await res.json()
-      if (res.ok && data.success) {
+      if (data.success) {
         setStatus('success')
       } else {
         setStatus('error')
