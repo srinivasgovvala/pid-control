@@ -4,7 +4,8 @@ Smart Automation. Sustainable Performance.
 
 Professional corporate website for **PID Controls**, a Hyderabad-based Building Management System (BMS) and automation company with 10+ years of experience in intelligent building automation and energy management.
 
-**Live:** [www.pid-controls.com](https://www.pid-controls.com)
+**Live:** 
+([https://www.pid-controls.com](https://pid-control.vercel.app/))
 
 ---
 
